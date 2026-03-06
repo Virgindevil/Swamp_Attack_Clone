@@ -33,6 +33,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ApplyDamage(int damage)
+    { 
+        _currentHealth -= damage;
+        if (_currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void OnEnemyDied(int reward)
     {
         Money += reward;
