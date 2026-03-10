@@ -9,5 +9,7 @@ public class Spawner : MonoBehaviour
 
 public class Wave
 { 
-
+    public GameObject Tamplate;
+    public float Delay;
+    public int NumberOfWaves;
 }
