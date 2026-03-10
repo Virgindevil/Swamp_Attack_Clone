@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CelebrationState : MonoBehaviour
+[RequireComponent(typeof(Animator))]
+public class CelebrationState : State
 {
     private Animator _animator;
 
-        private void Start()
+    private void Awake()
     {
         _animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
-        _animator.Play("Celebration");
+        _animator.Play("Dead");
     }
 
     private void OnDisable()
