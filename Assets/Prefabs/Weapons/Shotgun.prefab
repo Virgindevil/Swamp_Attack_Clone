@@ -93,6 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6240815375434732920}
+  - component: {fileID: -1266653279497550556}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -117,6 +118,24 @@ Transform:
   - {fileID: 828699929161783363}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1266653279497550556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870036881727196034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598976595fc751e4ab7a0989a7834280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _label: "\u0414\u0440\u043E\u0431\u043E\u0432\u0438\u043A"
+  _price: 50
+  _sprite: {fileID: 21300000, guid: 05bf8a9d9c4a39943a5914d998625f8a, type: 3}
+  _isBuy: 0
+  _projectile: {fileID: 4025235828724284214, guid: eebe506d4fe45b44d9f31d62c4235026, type: 3}
+  _shootPoint: {fileID: 1073701065104742702}
 --- !u!1 &2371065095321195065
 GameObject:
   m_ObjectHideFlags: 0

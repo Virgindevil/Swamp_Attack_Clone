@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
@@ -10,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _shootPoint;
 
     public int Money { get; private set; }
+    public event UnityAction<int, int> HealthChanged;
+    public event UnityAction<int> MoneyChanged;
 
     private Weapon _currentWeapon;
     private int _currentHealth;
@@ -21,7 +24,7 @@ public class Player : MonoBehaviour
         _currentWeapon = _weapons[0];
         _currentHealth = _health;
         _animator = GetComponent<Animator>();
-
+        
     }
 
     // Update is called once per frame
@@ -31,11 +34,13 @@ public class Player : MonoBehaviour
         {
             _currentWeapon.Shoot(_shootPoint);
         }
+        Debug.Log(Money);
     }
 
     public void ApplyDamage(int damage)
-    { 
+    {
         _currentHealth -= damage;
+        HealthChanged?.Invoke(_currentHealth, _health);
         if (_currentHealth <= 0)
         {
             Destroy(gameObject);
@@ -47,4 +52,16 @@ public class Player : MonoBehaviour
         Money += reward;
     }
 
+    public void AddMoney(int money)
+    {
+        Money += money;
+        MoneyChanged?.Invoke(Money);
+    }
+
+    public void BuyWeapon(Weapon weapon)
+    { 
+        Money -= weapon.Price;
+        _weapons.Add(weapon);
+        MoneyChanged?.Invoke(Money);
+    }
 }

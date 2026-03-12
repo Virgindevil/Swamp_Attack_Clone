@@ -179,6 +179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3675132415459327151}
+  - component: {fileID: -7015769402246548454}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -203,6 +204,24 @@ Transform:
   - {fileID: 350254627089183943}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7015769402246548454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4227152935649562288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bfc8405f33100446b67d1fa15fc2c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _label: "\u041B\u0443\u043A"
+  _price: 75
+  _sprite: {fileID: 21300000, guid: b7b5696ac7afae44785bc464fa726041, type: 3}
+  _isBuy: 0
+  _projectile: {fileID: 5512954532689661102, guid: 6df2772e222c76e4f93b5d62dd5b1114, type: 3}
+  _shootPoint: {fileID: 350254627089183943}
 --- !u!1 &5599943083610968696
 GameObject:
   m_ObjectHideFlags: 0
