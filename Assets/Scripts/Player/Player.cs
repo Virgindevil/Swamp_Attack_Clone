@@ -1,52 +1,47 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int _health;    
+    [SerializeField] private int _health;
     [SerializeField] private List<GameObject> _weaponPrefabs;
 
-    private List<GameObject> _visibleWeapons = new();
-    private List<Weapon> _weapons = new();
-
-    private Animator _animator;
+    private List<WeaponInfo> _weapons = new(); 
     private Transform _shootPoint;
-    private Weapon _currentWeapon;
-    private GameObject _currentWeaponPrefab;
-    private GameObject _InstantiateWeaponPrefab;
-    private int _currentWeaponNumber = 0;
-    private int _currentHealth;
-   
 
     public int Money { get; private set; }
     public event UnityAction<int, int> HealthChanged;
     public event UnityAction<int> MoneyChanged;
 
+    private Weapon _currentWeapon;
+    private GameObject _currentWeaponInstance; 
+    private WeaponInfo _currentWeaponInfo;
+    private int _currentWeaponNumber = 0;
+    private int _currentHealth;
+    private Animator _animator;
+
     void Start()
-    {
-        _currentWeaponPrefab = _weaponPrefabs[0];
+    {     
+        if (_weaponPrefabs.Count > 0)
+        {
+            var firstPrefab = _weaponPrefabs[0];
+            var weaponComponent = firstPrefab.GetComponent<Weapon>();
+            var weaponInfo = new WeaponInfo(weaponComponent, firstPrefab);
 
-        _InstantiateWeaponPrefab = Instantiate(_currentWeaponPrefab);
-        _visibleWeapons.Add(_InstantiateWeaponPrefab);
-
-        _weapons.Add(GetWeapon(_currentWeaponPrefab));
-        ChangeWeapon(_weapons[_currentWeaponNumber]);
-        _currentWeapon = _weapons[0];
-        _shootPoint = GetShootPoint(_currentWeaponPrefab);
+            _weapons.Add(weaponInfo);
+            EquipWeapon(weaponInfo);
+        }
 
         _currentHealth = _health;
         _animator = GetComponent<Animator>();
-        
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
+        if (Input.GetMouseButtonDown(0) && _currentWeapon != null && Time.timeScale != 0)
         {
             _currentWeapon.Shoot(_shootPoint);
         }
@@ -59,7 +54,16 @@ public class Player : MonoBehaviour
         if (_currentHealth <= 0)
         {
             Destroy(gameObject);
+            if (_currentWeaponInstance != null)
+            {
+                Destroy(_currentWeaponInstance);
+            }
         }
+    }
+
+    private Transform GetShootPoint(GameObject weaponPrefab)
+    {
+        return weaponPrefab.GetComponentInChildren<ShootPoint>().GetShootPoint();
     }
 
     public void OnEnemyDied(int reward)
@@ -73,71 +77,50 @@ public class Player : MonoBehaviour
         MoneyChanged?.Invoke(Money);
     }
 
-    public void BuyWeapon(Weapon weapon)
-    { 
-        Money -= weapon.Price;
-        _weapons.Add(weapon);
+    public void BuyWeapon(WeaponInfo weaponInfo)
+    {
+        Money -= weaponInfo.WeaponComponent.Price;
+        _weapons.Add(weaponInfo);
+        weaponInfo.IsPurchased = true;
         MoneyChanged?.Invoke(Money);
-    }
-
-    public void PickCurrentWeapon()
-    { 
-        
     }
 
     public void NextWeapon()
     {
-        if (_currentWeaponNumber == _weapons.Count -1)
+        if (_weapons.Count == 0) return;
+
+        if (_currentWeaponNumber == _weapons.Count - 1)
             _currentWeaponNumber = 0;
-        else 
+        else
             _currentWeaponNumber++;
 
-        ChangeWeapon(_weapons[_currentWeaponNumber]);
-        ChangeWeaponPrefab(_weaponPrefabs[_currentWeaponNumber]);
+        EquipWeapon(_weapons[_currentWeaponNumber]);
     }
 
     public void PrevWeapon()
     {
+        if (_weapons.Count == 0) return;
+
         if (_currentWeaponNumber == 0)
             _currentWeaponNumber = _weapons.Count - 1;
         else
             _currentWeaponNumber--;
 
-        ChangeWeapon(_weapons[_currentWeaponNumber]);
-        ChangeWeaponPrefab(_weaponPrefabs[_currentWeaponNumber]);
+        EquipWeapon(_weapons[_currentWeaponNumber]);
     }
 
-    private void ChangeWeapon(Weapon weapon)
-    { 
-        _currentWeapon = weapon;
-    }
-
-    private void ChangeWeaponPrefab(GameObject weaponPrefab)
+    private void EquipWeapon(WeaponInfo weaponInfo)
     {
-        _currentWeaponPrefab = weaponPrefab;
-        _shootPoint = GetShootPoint(_currentWeaponPrefab);
-    }
-
-    private void DisableAllPrefabs()
-    {
-        foreach (var prefab in _visibleWeapons)
+        if (_currentWeaponInstance != null)
         {
-            prefab.SetActive(false);
+            Destroy(_currentWeaponInstance);
         }
-    }
 
-    private void EnableCurrentWeaponPrefab(int index)
-    {
-        _visibleWeapons[index].SetActive(true);
-    }    
+        _currentWeaponInfo = weaponInfo;
 
-    private Transform GetShootPoint(GameObject weaponPrefab)
-    {
-        return weaponPrefab.GetComponentInChildren<ShootPoint>().GetShootPoint();
-    }
+        _currentWeaponInstance = Instantiate(weaponInfo.Prefab);
+        _currentWeapon = _currentWeaponInstance.GetComponent<Weapon>();
 
-    private Weapon GetWeapon(GameObject weaponPrefab)
-    {
-        return weaponPrefab.GetComponent<Weapon>();
+        _shootPoint = GetShootPoint(weaponInfo.Prefab);
     }
 }

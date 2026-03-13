@@ -9,6 +9,10 @@ using UnityEngine.UI;
 public class WeaponView : MonoBehaviour
 {
 
+    [SerializeField] private TMP_Text _nameText;
+    [SerializeField] private TMP_Text _priceText;
+    [SerializeField] private Button _buyButton;
+
     [SerializeField] private TMP_Text _label;
     [SerializeField] private TMP_Text _price;
     [SerializeField] private Image _icon;
@@ -36,11 +40,19 @@ public class WeaponView : MonoBehaviour
 
     private void TryLockItem()
     {
-        if (_weapon.IsBuy == true)
+        if (_weapon.IsPurchased == true)
         {
             _sellButton.interactable = false;
             _price.text = "";
         }
+    }
+    public void MarkAsPurchased()
+    {
+        if (_buyButton != null)
+        {
+            _buyButton.interactable = false;
+        }
+        _priceText.text = "КУПЛЕНО";
     }
 
     public void Render(Weapon weapon)
