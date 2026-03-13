@@ -30,29 +30,24 @@ public class Shop : MonoBehaviour
     {
         var view = Instantiate(_template, _itemContainer.transform);
         view.SellWeaponClick += OnSellButtonClick;
-        view.Render(weaponInfo.WeaponComponent);
+        view.Render(weaponInfo);
     }
 
-    private void OnSellButtonClick(Weapon weapon, WeaponView weaponView)
+    private void OnSellButtonClick(WeaponInfo weaponInfo, WeaponView weaponView)
     {
-        TrySellWeapon(weapon, weaponView);
+        TrySellWeapon(weaponInfo, weaponView);
     }
 
-    private void TrySellWeapon(Weapon weapon, WeaponView weaponView)
+    private void TrySellWeapon(WeaponInfo weaponInfo, WeaponView weaponView)
     {
-       //if (weaponInfo.IsPurchased) 
-        //      return;
-
-        if (weapon.Price <= _player.Money)
+       if (weaponInfo.IsPurchased) 
+              return;
+        
+        if (weaponInfo.WeaponComponent.Price <= _player.Money)
         {
-            var weaponInfo = _weapons.Find(w => w.WeaponComponent == weapon);
-
-            if (weaponInfo != null)
-            {
-                _player.BuyWeapon(weaponInfo);
-                weapon.IsPurchased == true;
-                weaponView.SellWeaponClick -= OnSellButtonClick;
-            }
+            _player.BuyWeapon(weaponInfo);
+            weaponView.MarkAsPurchased(); 
+            weaponView.SellWeaponClick -= OnSellButtonClick;
         }
     }
 }

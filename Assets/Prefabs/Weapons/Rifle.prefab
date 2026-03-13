@@ -175,9 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _label: "\u0412\u0438\u043D\u0442\u043E\u0432\u043A\u0430"
-  _price: 150
+  _price: 0
   _sprite: {fileID: 21300000, guid: d215fcec95de2204aa30bbaa21f731a0, type: 3}
-  _isBuy: 1
   _projectile: {fileID: 8489173254450529416, guid: 2e8fcab96217f1a4ebbf07f6e0c852b1, type: 3}
   _shootPoint: {fileID: 5765038881599030120}
 --- !u!1 &1969063566219896695

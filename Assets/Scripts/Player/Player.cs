@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
             var weaponComponent = firstPrefab.GetComponent<Weapon>();
             var weaponInfo = new WeaponInfo(weaponComponent, firstPrefab);
 
+            weaponInfo.IsPurchased = true;
+            
             _weapons.Add(weaponInfo);
             EquipWeapon(weaponInfo);
         }
@@ -54,10 +56,7 @@ public class Player : MonoBehaviour
         if (_currentHealth <= 0)
         {
             Destroy(gameObject);
-            if (_currentWeaponInstance != null)
-            {
-                Destroy(_currentWeaponInstance);
-            }
+            Destroy(_currentWeaponInstance);
         }
     }
 
