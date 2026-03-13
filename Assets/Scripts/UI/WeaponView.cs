@@ -17,11 +17,15 @@ public class WeaponView : MonoBehaviour
     private Weapon _weapon;
     public event UnityAction<Weapon, WeaponView> SellWeaponClick;
 
-    private void OnEnable()
+    private void Start()
     {
+        TryLockItem();
+    }
+
+    private void OnEnable()
+    {        
         _sellButton.onClick.AddListener(OnButtonClick);
         _sellButton.onClick.AddListener(TryLockItem);
-        Debug.Log($"{_weapon} + buy?{_weapon.IsBuy}");
     }
 
     private void OnDisable()
@@ -35,6 +39,7 @@ public class WeaponView : MonoBehaviour
         if (_weapon.IsBuy == true)
         {
             _sellButton.interactable = false;
+            _price.text = "";
         }
     }
 

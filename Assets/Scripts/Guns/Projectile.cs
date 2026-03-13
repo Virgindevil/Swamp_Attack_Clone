@@ -19,6 +19,8 @@ public class Projectile : MonoBehaviour
             enemy.TakeDamage(_damage);
             Destroy(gameObject);
         }
+        else
+            Destroy(gameObject);
     }
 
 }

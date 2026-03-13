@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] private List<Weapon> _weapons;
+    [SerializeField] private List<GameObject> _weaponPrefabs;    
     [SerializeField] private Player _player;
     [SerializeField] private WeaponView _template;
     [SerializeField] private GameObject _itemContainer;
 
+    private List<Weapon> _weapons = new();
+
     private void Start()
     {
-        for (int i = 0; i < _weapons.Count; i++)
+        foreach (var weapon in _weaponPrefabs)
+        {
+            _weapons.Add(weapon.GetComponent<Weapon>());
+        }
+
+        for (int i = 0; i < _weaponPrefabs.Count; i++)
         {
             AddItem(_weapons[i]);
         }
     }
-
 
     private void AddItem(Weapon weapon)
     {

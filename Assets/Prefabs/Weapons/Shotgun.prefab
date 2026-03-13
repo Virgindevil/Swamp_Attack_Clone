@@ -111,7 +111,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 74.4, y: -4.6, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.015, y: 0.015, z: 0.015}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1073701065104742702}
@@ -437,6 +437,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1073701065104742702}
+  - component: {fileID: 9124362504219164212}
   m_Layer: 0
   m_Name: ShootPoint
   m_TagString: Untagged
@@ -459,6 +460,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6240815375434732920}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9124362504219164212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3746617181309605096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9cca9fd6cc22094097ed2540311250e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5389766445151079164
 GameObject:
   m_ObjectHideFlags: 0
