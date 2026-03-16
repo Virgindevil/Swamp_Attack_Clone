@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
         EquipWeapon(_weapons[_currentWeaponNumber]);
     }
 
-    private void EquipWeapon(WeaponInfo weaponInfo)
+    public void EquipWeapon(WeaponInfo weaponInfo)
     {
         if (_currentWeaponInstance != null)
         {
@@ -121,5 +121,10 @@ public class Player : MonoBehaviour
         _currentWeapon = _currentWeaponInstance.GetComponent<Weapon>();
 
         _shootPoint = GetShootPoint(weaponInfo.Prefab);
+    }
+
+    public List<WeaponInfo> GetPurchasedWeapons()
+    {
+        return _weapons;
     }
 }

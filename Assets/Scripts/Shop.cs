@@ -13,18 +13,32 @@ public class Shop : MonoBehaviour
 
     private void Start()
     {
+        List<WeaponInfo> playerInventory = _player.GetPurchasedWeapons();
+
         foreach (var prefab in _weaponPrefabs)
         {
             var weaponComponent = prefab.GetComponent<Weapon>();
             var weaponInfo = new WeaponInfo(weaponComponent, prefab);
-            _weapons.Add(weaponInfo);
-        }
 
-        foreach (var weaponInfo in _weapons)
-        {
+            bool isAlreadyBought = false;
+            foreach (var ownedWeapon in playerInventory)
+            {
+                if (ownedWeapon.Prefab == prefab)
+                {
+                    isAlreadyBought = true;
+                    break;
+                }
+            }
+
+            if (isAlreadyBought)
+            {
+                weaponInfo.IsPurchased = true;
+            }
+
+            _weapons.Add(weaponInfo);
             AddItem(weaponInfo);
         }
-    }
+    }      
 
     private void AddItem(WeaponInfo weaponInfo)
     {

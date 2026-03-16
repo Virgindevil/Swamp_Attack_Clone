@@ -17,11 +17,7 @@ public class WeaponView : MonoBehaviour
     private Weapon _weapon;
     public event UnityAction<WeaponInfo, WeaponView> SellWeaponClick;
 
-    private void Start()
-    {
-        OnButtonClick();
-    }
-
+    
     private void OnEnable()
     {        
         _sellButton.onClick.AddListener(OnButtonClick);
